@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/data/mongo  
+            		 http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+            		 http://www.springframework.org/schema/data/repository
+					 http://www.springframework.org/schema/data/repository/spring-repository.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx.xsd
+                     http://www.springframework.org/schema/data/mongo
+        			 http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+		<!--
+
+		 配置信息在 base-demo 中有.
+		 -->
+	<!-- mongo 设置 -->
+	<context:annotation-config/>
+
+	<!-- 简单的使用 -->
+	<!--
+		<bean id="mongo" class="com.mongodb.Mongo">
+			 <constructor-arg name="host" value="${mongo.host}"/>
+			 <constructor-arg name="port" value="${mongo.port}"/>
+		</bean>
+		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+	         <constructor-arg name="mongo" ref="mongo"/>
+	         <constructor-arg name="databaseName" value="${mongo.dbName}"/>
+	    </bean>
+	 -->
+
+	<!--mongodb读取一体-->
+	<!-- mongo 配置(多台机器的话,就在List中多加几个配置) -->
+	<bean id="mongo" class="com.application.base.mongo.spring.factory.MongoFactory">
+		<property name="serverStrings">
+			<list>
+				<value>${mongo.server1}</value>
+			</list>
+		</property>
+		<property name="mongoOptions" ref="mongoOptions"/>
+	</bean>
+	<!-- MongoOptions 设置... -->
+	<bean id="mongoOptions" class="com.mongodb.MongoOptions">
+		<property name="connectionsPerHost" value="${mongo.connectionsPerHost}"/>
+		<property name="threadsAllowedToBlockForConnectionMultiplier" value="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
+		<property name="maxWaitTime" value="${mongo.maxWaitTime}"/>
+		<property name="connectTimeout" value="${mongo.connectTimeOut}"/>
+		<property name="socketTimeout" value="${mongo.socketTimeOut}"/>
+		<property name="socketKeepAlive" value="${mongo.socketKeepAlive}"/>
+		<property name="safe" value="${mongo.safe}"/>
+		<property name="wtimeout" value="${mongo.wtimeout}"/>
+	</bean>
+
+	<!-- mongo的工厂，通过它来取得mongo实例,dbname为mongodb的数据库名，没有的话会自动创建 -->
+	<bean id="mongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+		<constructor-arg ref="mongo"/>
+		<constructor-arg value="${mongo.dbName}" />
+	</bean>
+
+	<bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
+	<!-- 去掉data中的, _class 项目 , 如果想要 , 就注释掉如下的设置 -->
+	<bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+		<constructor-arg name="typeKey">
+			<null />
+		</constructor-arg>
+	</bean>
+	<!-- collection的映射 -->
+	<bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		<constructor-arg name="mappingContext" ref="mappingContext" />
+		<property name="typeMapper" ref="defaultMongoTypeMapper" />
+	</bean>
+	<!-- mongodb的主要操作对象，所有对mongodb的增删改查的操作都是通过它完成 -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		<constructor-arg name="mongoConverter" ref="mappingMongoConverter" />
+	</bean>
+
+
+
+
+
+
+	<!--mongodb读取-->
+	<!-- mongo 配置(集群的话,就多添加几个 ${mongo.server1} ) -->
+	<bean id="mongoRead" class="com.application.base.mongo.spring.factory.MongoFactory">
+		<property name="serverStrings">
+			<list>
+				<value>${mongo.server1}</value>
+			</list>
+		</property>
+		<property name="mongoOptions" ref="mongoOptionsRead"/>
+	</bean>
+	<!-- MongoOptions 设置... -->
+	<bean id="mongoOptionsRead" class="com.mongodb.MongoOptions">
+		<property name="connectionsPerHost" value="${mongo.connectionsPerHost}"/>
+		<property name="threadsAllowedToBlockForConnectionMultiplier" value="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
+		<property name="maxWaitTime" value="${mongo.maxWaitTime}"/>
+		<property name="connectTimeout" value="${mongo.connectTimeOut}"/>
+		<property name="socketTimeout" value="${mongo.socketTimeOut}"/>
+		<property name="socketKeepAlive" value="${mongo.socketKeepAlive}"/>
+		<property name="safe" value="${mongo.safe}"/>
+		<property name="wtimeout" value="${mongo.wtimeout}"/>
+	</bean>
+
+	<!-- mongo的工厂，通过它来取得mongo实例,dbname为mongodb的数据库名，没有的话会自动创建 -->
+	<bean id="mongoDbFactoryRead" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+		<constructor-arg ref="mongoRead"/>
+		<constructor-arg value="${mongo.dbName}" />
+	</bean>
+	<bean id="mappingContextRead" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
+	<!-- 去掉data中的, _class 项目 , 如果想要 , 就注释掉如下的设置 -->
+	<bean id="defaultMongoTypeMapperRead" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+		<constructor-arg name="typeKey">
+			<null />
+		</constructor-arg>
+	</bean>
+	<!-- collection的映射 -->
+	<bean id="mappingMongoConverterRead" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactoryRead" />
+		<constructor-arg name="mappingContext" ref="mappingContextRead" />
+		<property name="typeMapper" ref="defaultMongoTypeMapperRead" />
+	</bean>
+	<!-- mongodb的主要操作对象，所有对mongodb的增删改查的操作都是通过它完成 -->
+	<bean id="mongoTemplateRead" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactoryRead" />
+		<constructor-arg name="mongoConverter" ref="mappingMongoConverterRead" />
+	</bean>
+
+
+
+
+
+	<!--mongodb 写入-->
+	<!-- mongo 配置(集群的话,就多添加几个 ${mongo.server1} ) -->
+	<bean id="mongoWrite" class="com.application.base.mongo.spring.factory.MongoFactory">
+		<property name="serverStrings">
+			<list>
+				<value>${mongo.server1}</value>
+			</list>
+		</property>
+		<property name="mongoOptions" ref="mongoOptionsWrite"/>
+	</bean>
+	<!-- MongoOptions 设置... -->
+	<bean id="mongoOptionsWrite" class="com.mongodb.MongoOptions">
+		<property name="connectionsPerHost" value="${mongo.connectionsPerHost}"/>
+		<property name="threadsAllowedToBlockForConnectionMultiplier" value="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
+		<property name="maxWaitTime" value="${mongo.maxWaitTime}"/>
+		<property name="connectTimeout" value="${mongo.connectTimeOut}"/>
+		<property name="socketTimeout" value="${mongo.socketTimeOut}"/>
+		<property name="socketKeepAlive" value="${mongo.socketKeepAlive}"/>
+		<property name="safe" value="${mongo.safe}"/>
+		<property name="wtimeout" value="${mongo.wtimeout}"/>
+	</bean>
+
+	<!-- mongo的工厂，通过它来取得mongo实例,dbname为mongodb的数据库名，没有的话会自动创建 -->
+	<bean id="mongoDbFactoryWrite" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+		<constructor-arg ref="mongoWrite"/>
+		<constructor-arg value="${mongo.dbName}" />
+	</bean>
+	<bean id="mappingContextWrite" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
+	<!-- 去掉data中的, _class 项目 , 如果想要 , 就注释掉如下的设置 -->
+	<bean id="defaultMongoTypeMapperWrite" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+		<constructor-arg name="typeKey">
+			<null />
+		</constructor-arg>
+	</bean>
+	<!-- collection的映射 -->
+	<bean id="mappingMongoConverterWrite" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactoryWrite" />
+		<constructor-arg name="mappingContext" ref="mappingContextWrite" />
+		<property name="typeMapper" ref="defaultMongoTypeMapperWrite" />
+	</bean>
+	<!-- mongodb的主要操作对象，所有对mongodb的增删改查的操作都是通过它完成 -->
+	<bean id="mongoTemplateWrite" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactoryWrite" />
+		<constructor-arg name="mongoConverter" ref="mappingMongoConverterWrite" />
+	</bean>
+
+</beans>

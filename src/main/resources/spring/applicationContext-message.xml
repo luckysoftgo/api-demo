@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jms
+        http://www.springframework.org/schema/jms/spring-jms.xsd
+        http://activemq.apache.org/schema/core
+        http://activemq.apache.org/schema/core/activemq-core.xsd
+        http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/rabbit
+        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+		
+	<!-- activeMQ -->
+	
+    <mvc:annotation-driven />
+	<!-- 包扫描 -->
+	<context:component-scan base-package="com.application.base.message.activemq" />
+    <!-- 建立一个连接工厂,可以单独使用.( 可以将这些信息通过配置文件获取 ) -->
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value ="tcp://127.0.0.1:61616"/>
+		<property name="useAsyncSend" value="true" />  
+      	<property name="alwaysSessionAsync" value="true" />  
+      	<property name="useDedicatedTaskRunner" value="true" /> 
+      	<property name="userName" value="admin"/>
+      	<property name="password" value="admin"/>
+    </bean>
+    <!-- 建立一个连接池. --> 
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"  destroy-method="stop">
+        <property name="connectionFactory" ref="activeMQConnectionFactory"/>
+        <property name="maxConnections" value="100"/>
+    </bean>
+    
+    <!-- jms模式发消息 -->
+    <!-- 监听器 -->
+    <bean id="jmsListener" class="com.application.base.message.activemq.listener.JmsMessageListener"/>
+    <!-- 消息队列的主要工具类设置. -->
+    <bean id="jmsActiveMQ" class="com.application.base.message.activemq.jms.common.ActiveMqJmsCommonUtil"/>
+    <!-- 消息生产者 -->
+    <bean id="jmsProducer" class="com.application.base.message.activemq.jms.producer.ActiveMqJmsMessageProducer"/>
+    <!-- 消息消费者 -->
+    <bean id="jmsCustomer" class="com.application.base.message.activemq.jms.customer.ActiveMqJmsMessageCustomer"/>
+
+	<!-- 点对点point方式发送消息 -->
+    <!-- 监听器 -->
+    <bean id="pointListener" class="com.application.base.message.activemq.listener.PointMessageListener"/>
+    <!-- 消息队列的主要工具类设置. -->
+    <bean id="pointActiveMQ" class="com.application.base.message.activemq.point.common.ActiveMqPointCommonUtil"/>
+    <!-- 消息生产者 -->
+    <bean id="pointProducer" class="com.application.base.message.activemq.point.producer.ActiveMqPointMessageProducer"/>
+    <!-- 消息消费者 -->
+    <bean id="pointCustomer" class="com.application.base.message.activemq.point.customer.ActiveMqPointMessageCustomer"/>
+
+	<!-- 发布订阅topic方式发送消息 -->
+    <!-- 监听器 -->
+    <bean id="topicListener" class="com.application.base.message.activemq.listener.TopicMessageListener"/>
+    <!-- 消息队列的主要工具类设置. -->
+    <bean id="topicActiveMQ" class="com.application.base.message.activemq.topic.common.ActiveMqTopicCommonUtil"/>
+    <!-- 消息生产者 -->
+    <bean id="topicProducer" class="com.application.base.message.activemq.topic.producer.ActiveMqTopicMessageProducer"/>
+    <!-- 消息消费者 -->
+    <bean id="topicCustomer" class="com.application.base.message.activemq.topic.customer.ActiveMqTopicMessageCustomer"/>
+
+</beans>
