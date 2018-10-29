@@ -74,17 +74,17 @@ public class DataTest extends BaseJunit4Test {
 		String key2 = "machine02";
 		for (int i = 0; i < 10; i++) {
 			if (i%2==0) {
-				session.push(key1, "AAAAA"+i);
+				session.lpush(key1, "AAAAA"+i);
 			}else{
-				session.push(key2, "BBBBB"+i);
+				session.lpush(key2, "BBBBB"+i);
 			}
 		}
 		//取出.
 		System.out.println("print out ...");
 		String value1,value2 ;
 		do {
-			value1 = session.pull(key1);
-			value2 = session.pull(key2);
+			value1 = session.lpop(key1);
+			value2 = session.lpop(key2);
 			System.out.println("key1:"+value1+",key2:"+value2);
 		}
 		while (!BaseStringUtil.isEmpty(value1) && !BaseStringUtil.isEmpty(value2));

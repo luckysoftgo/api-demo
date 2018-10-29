@@ -29,13 +29,13 @@ public class TestRedisQueue extends BaseJunit4Test {
 	private void push() throws Exception {
 		for (int i = 0; i < 10; i++) {
 			Message message = new Message(i, "测试","这是第" + i + "个内容");
-			redisFactory.getCacheReadDataSession().getRedisSession().push(key+"-"+i, JsonConvertUtils.toJson(message));
+			redisFactory.getCacheReadDataSession().getRedisSession().lpush(key+"-"+i, JsonConvertUtils.toJson(message));
 		}
 	}
 	
 	private void pull() throws Exception {
 		for (int i = 0; i < 10; i++) {
-			String message = redisFactory.getCacheReadDataSession().getRedisSession().pull(key+"-"+i);
+			String message = redisFactory.getCacheReadDataSession().getRedisSession().lpop(key+"-"+i);
 			Message msg  = JsonConvertUtils.fromJson(message,Message.class);
 			if (msg != null) {
 				System.out.println(msg.getMsgId() + "<---->" + msg.getMsgcontent());
