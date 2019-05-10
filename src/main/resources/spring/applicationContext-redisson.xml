@@ -20,6 +20,7 @@
             id="standalone"
             name="simpleClient"
             codec-ref="stringCodec">
+        
         <redisson:single-server
                 address="redis://101.201.177.32:16339"
                 connection-pool-size="500"
@@ -27,9 +28,9 @@
                 connect-timeout="10000"
                 timeout="3000"
                 ping-timeout="30000"
-                reconnection-timeout="30000"
                 password="02681330-d47f-4e34-a0fc-4a2f8931c523"
         />
+        
     </redisson:client>
     <bean id="redissonFactory" class="com.application.base.cache.redisson.redisson.factory.RedissonSimpleSessionFactory">
         <property name="simpleClient" ref="standalone"/>
@@ -37,8 +38,6 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-
-
 
 
     <!-- 哨兵部署应用 -->
@@ -66,10 +65,6 @@
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
     -->
-
-
-
-
 
     <!-- 集群部署应用 -->
     <!--

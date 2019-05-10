@@ -31,15 +31,13 @@
         <constructor-arg index="3" value="${redis.timeout}"/>
         <constructor-arg index="4" value="${redis.password}"/>
     </bean>
+    
     <bean id="redisFactory" class="com.application.base.cache.redis.jedis.factory.JedisSimpleSessionFactory">
-        <property name="pool" ref="jedisPool"/>
+        <property name="jedisPool" ref="jedisPool"/>
     </bean>
     <bean id="distributedLock" class="com.application.base.cache.redis.jedis.lock.DelegateDistributedLock">
-        <property name="factory" ref="redisFactory"/>
+        <property name="sessionFactory" ref="redisFactory"/>
     </bean>
-
-
-
     
     
     <!--2. redis 哨兵模式,有一个哨兵的redis服务可以调用 -->
@@ -64,9 +62,6 @@
     -->
 
 
-	
-	
-	
 	<!--3. redis集群模式,有一个redis的集群服务器组可以使用 -->
     <!--
     <bean id="jedisPool" class="com.application.base.cache.redis.jedis.factory.JedisClusterFactory">
