@@ -4,7 +4,6 @@ import com.application.base.cache.redisson.redisson.factory.RedissonSimpleSessio
 import com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock;
 import com.application.base.core.BaseJunit4Test;
 import org.junit.Test;
-import org.redisson.RedissonRedLock;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class RedissonTest extends BaseJunit4Test {
 		String key = "testLock";
 		String mapKey = "testMap";
 		
-		boolean flag = redissonDistLock.lock(key);
+		boolean flag = redissonDistLock.loopLock(key);
 		if (flag) {
 			Map<String,Object> params = new HashMap<>(12);
 			params.put("a",1);

@@ -37,9 +37,8 @@ public class RedisTest extends BaseJunit4Test {
 		if (isLock){
 			System.out.println("2..还是锁住的.");
 		}
-		
 		//得到结果.
-		String value = distributedLock.getFactory().getRedisSession().getData(key);
+		String value = distributedLock.getSessionFactory().getRedisSession().getData(key);
 		System.out.println("value:"+value);
 	}
 	

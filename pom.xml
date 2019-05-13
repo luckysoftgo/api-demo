@@ -19,32 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.application.base</groupId>
-            <artifactId>base-auth</artifactId>
-            <version>${base-xxx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.application.base</groupId>
-            <artifactId>base-cache</artifactId>
-            <version>${base-xxx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.application.base</groupId>
             <artifactId>base-core</artifactId>
-            <version>${base-xxx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.application.base</groupId>
-            <artifactId>base-message</artifactId>
-            <version>${base-xxx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.application.base</groupId>
-            <artifactId>base-mongo</artifactId>
-            <version>${base-xxx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.application.base</groupId>
-            <artifactId>base-pay</artifactId>
             <version>${base-xxx.version}</version>
         </dependency>
         <dependency>
@@ -52,6 +27,71 @@
             <artifactId>base-utils</artifactId>
             <version>${base-xxx.version}</version>
         </dependency>
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-auth</artifactId>
+			<version>${base-xxx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-cache</artifactId>
+			<version>${base-xxx.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>netty</artifactId>
+					<groupId>org.jboss.netty</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-message</artifactId>
+			<version>${base-xxx.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>netty</artifactId>
+					<groupId>org.jboss.netty</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-pay</artifactId>
+			<version>${base-xxx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-es</artifactId>
+			<version>${base-xxx.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>netty</artifactId>
+					<groupId>org.jboss.netty</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.32.Final</version>
+		</dependency>
+		
     </dependencies>
 
     <!-- 全局环境变量 -->
