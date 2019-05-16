@@ -67,6 +67,7 @@
                 <value>classpath:/properties/config.properties</value>
                 <value>classpath:/properties/redis.properties</value>
                 <value>classpath:/properties/mongo.properties</value>
+                <value>classpath:/properties/es.properties</value>
 		    </list>
         </property>
 	</bean>
@@ -83,6 +84,7 @@
     <import resource="classpath:spring/applicationContext-auth.xml"/>
     <import resource="classpath:spring/applicationContext-pay.xml"/>
     <import resource="classpath:spring/applicationContext-redisson.xml"/>
+    <import resource="classpath:spring/applicationContext-elastic.xml"/>
 
     <!-- 自动注册扫描文件 -->
     <context:annotation-config/>
@@ -98,6 +100,7 @@
                 <value>properties/jdbc.properties</value>
                 <value>properties/redis.properties</value>
                 <value>config/message.properties</value>
+                <value>properties/es.properties</value>
             </list>
         </property>
     </bean>

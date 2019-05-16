@@ -1,12 +1,15 @@
 package com.javabase.demo.web.test;
 
-import com.application.base.all.elastic.elastic.factory.ElasticSessionOperateFactory;
+import com.application.base.all.elastic.elastic.transport.factory.EsTransportSessionPoolFactory;
 import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.common.BaseController;
+import com.application.base.core.result.ResultDataVO;
 import com.application.base.utils.json.JsonConvertUtils;
-import com.javabase.demo.elastic.ElasticInitFactory;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +30,8 @@ public class ElasticController extends BaseController {
 	
 	
 	@Autowired(required = false)
-	private ElasticInitFactory elasticInitFactory;
+	private EsTransportSessionPoolFactory sessionPoolFactory;
+	
 	
 	/**
 	 * 通过配置文件获得信息
@@ -36,7 +40,6 @@ public class ElasticController extends BaseController {
 	 */
 	@RequestMapping("/settingElastic")
 	public void settingElastic(HttpServletRequest request, HttpServletResponse response) {
-		ElasticSessionOperateFactory operateFactory = elasticInitFactory.getSettingInstance();
 		ElasticData data = new ElasticData();
 		data.setIndex("elastic");
 		data.setType("apitest");
@@ -48,7 +51,7 @@ public class ElasticController extends BaseController {
 		info.put("info4","es读写");
 		info.put("info5","es分库");
 		data.setData(JsonConvertUtils.toJson(info));
-		boolean flag = operateFactory.getElasticSession().addEsData(data);
+		boolean flag = sessionPoolFactory.getElasticSession().addEsData(data);
 		System.out.printf("flag="+flag);
 	}
 	
@@ -59,7 +62,6 @@ public class ElasticController extends BaseController {
 	 */
 	@RequestMapping("/settingElastics")
 	public void settingElastics(HttpServletRequest request, HttpServletResponse response) {
-		ElasticSessionOperateFactory operateFactory = elasticInitFactory.getSettingInstance();
 		List<ElasticData> datas=new ArrayList<>();
 		for (int i = 0; i <100 ; i++) {
 			ElasticData data = new ElasticData();
@@ -75,7 +77,7 @@ public class ElasticController extends BaseController {
 			data.setData(JsonConvertUtils.toJson(info));
 			datas.add(data);
 		}
-		boolean flag = operateFactory.getElasticSession().addEsDataList(datas);
+		boolean flag = sessionPoolFactory.getElasticSession().addEsDataList(datas);
 		System.out.printf("flag="+flag);
 	}
 	
@@ -86,7 +88,6 @@ public class ElasticController extends BaseController {
 	 */
 	@RequestMapping("/paramElastic")
 	public void paramElastic(HttpServletRequest request, HttpServletResponse response) {
-		ElasticSessionOperateFactory operateFactory = elasticInitFactory.getParamInstance("my-application","192.168.2.169:9300",false);
 		ElasticData data = new ElasticData();
 		data.setIndex("elastic");
 		data.setType("apitest");
@@ -98,7 +99,7 @@ public class ElasticController extends BaseController {
 		info.put("info4","es读写4");
 		info.put("info5","es分库5");
 		data.setData(JsonConvertUtils.toJson(info));
-		boolean flag = operateFactory.getElasticSession().addEsData(data);
+		boolean flag = sessionPoolFactory.getElasticSession().addEsData(data);
 		
 		System.out.printf("flag="+flag);
 	}
@@ -110,7 +111,6 @@ public class ElasticController extends BaseController {
 	 */
 	@RequestMapping("/paramElastics")
 	public void paramElastics(HttpServletRequest request, HttpServletResponse response) {
-		ElasticSessionOperateFactory operateFactory = elasticInitFactory.getParamInstance("my-application","192.168.2.169:9300",false);
 		List<ElasticData> datas=new ArrayList<>();
 		for (int i = 0; i <100 ; i++) {
 			ElasticData data = new ElasticData();
@@ -126,8 +126,42 @@ public class ElasticController extends BaseController {
 			data.setData(JsonConvertUtils.toJson(info));
 			datas.add(data);
 		}
-		boolean flag = operateFactory.getElasticSession().addEsDataList(datas);
+		boolean flag = sessionPoolFactory.getElasticSession().addEsDataList(datas);
 		System.out.printf("flag="+flag);
 	}
 	
+	
+	/************************************************************************select info ***************************************************************************************/
+	/**
+	 * 获得对象.
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "/getInfo",method = RequestMethod.GET, produces =  "application/json;charset=UTF-8")
+	public ResultDataVO getInfo(HttpServletRequest request, HttpServletResponse response) {
+		ElasticData data = new ElasticData();
+		data.setIndex("elastic");
+		data.setType("apitest");
+		data.setId("8888888888888");
+		String result=sessionPoolFactory.getElasticSession().getDataById(data);
+		System.out.println("esde 的结果是:"+result);
+		ResultDataVO dataVO=new ResultDataVO("200","OK");
+		dataVO.setData(result);
+		return dataVO;
+	}
+	
+	
+	/**
+	 * 获得对象.
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "/getInfos",method = RequestMethod.GET, produces =  "application/json;charset=UTF-8")
+	public ResultDataVO getInfos(HttpServletRequest request, HttpServletResponse response) {
+		QueryBuilder query = QueryBuilders.matchQuery("user", "bruce");
+		List<ElasticData> data = sessionPoolFactory.getElasticSession().searcher(query,"bruce1","11111111111");
+		ResultDataVO dataVO=new ResultDataVO("200","OK");
+		dataVO.setData(data);
+		return dataVO;
+	}
 }
