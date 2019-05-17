@@ -4,6 +4,8 @@ import com.application.base.all.elastic.elastic.transport.factory.EsTransportSes
 import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.BaseJunit4Test;
 import com.application.base.utils.json.JsonConvertUtils;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,9 +45,25 @@ public class ElasticTest extends BaseJunit4Test {
 	}
 	
 	@Test
+	public void test1(){
+		ElasticData data = new ElasticData();
+		data.setIndex("finaltest");
+		data.setType("finaltest");
+		data.setId("student");
+		Map<String,Object> info=new HashMap<>();
+		info.put("name","学生");
+		info.put("idcard","98745612336985247"+(int)(10+Math.random()*(30-10+1)));
+		info.put("age",""+(int)(10+Math.random()*(30-10+1)));
+		info.put("score",""+(int)(10+Math.random()*(100-10+1)));
+		data.setData(JsonConvertUtils.toJson(info));
+		boolean flag = operateFactory.getElasticSession().addEsData(data);
+		System.out.println("flag="+flag);
+	}
+	
+	@Test
 	public void test100(){
 		List<ElasticData> datas=new ArrayList<>();
-		for (int i = 0; i <100 ; i++) {
+		for (int i = 1000; i <1500 ; i++) {
 			ElasticData data = new ElasticData();
 			data.setIndex("finaltest");
 			data.setType("finaltest");
@@ -55,10 +73,20 @@ public class ElasticTest extends BaseJunit4Test {
 			info.put("idcard","98745612336985247"+(int)(10+Math.random()*(30-10+1)));
 			info.put("age",""+(int)(10+Math.random()*(30-10+1)));
 			info.put("score",""+(int)(10+Math.random()*(100-10+1)));
-			data.setData(JsonConvertUtils.toJson(info));
+			data.setData(info);
 			datas.add(data);
 		}
 		boolean flag = operateFactory.getElasticSession().addEsDataList(datas);
 		System.out.println("flag="+flag);
+	}
+	
+	@Test
+	public void search(){
+		QueryBuilder builder = QueryBuilders.matchAllQuery();
+		List<ElasticData>  datas = operateFactory.getElasticSession().searcher(builder,"finaltest","finaltest");
+		System.out.println("size="+datas.size());
+		for (int i = 0; i < datas.size(); i++) {
+			System.out.println(datas.get(i).getData());
+		}
 	}
 }
