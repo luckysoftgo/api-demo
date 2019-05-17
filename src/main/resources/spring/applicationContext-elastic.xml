@@ -12,6 +12,7 @@
     <bean id="nodeConfig" class="com.application.base.all.elastic.elastic.transport.config.EsTransportNodeConfig">
         <property name="nodeHost" value="${elastic.host}"/>
         <property name="nodePort" value="${elastic.port}"/>
+        <property name="nodeSchema" value="${elastic.schema}"/>
     </bean>
     
     <!-- elastic 基础信息配置 (公共使用) -->
