@@ -77,7 +77,7 @@ public class ElasticController extends BaseController {
 			data.setData(JsonConvertUtils.toJson(info));
 			datas.add(data);
 		}
-		boolean flag = sessionPoolFactory.getElasticSession().addEsDataList(datas);
+		boolean flag = sessionPoolFactory.getElasticSession().addEsDataList(datas,false);
 		System.out.printf("flag="+flag);
 	}
 	
@@ -126,7 +126,7 @@ public class ElasticController extends BaseController {
 			data.setData(JsonConvertUtils.toJson(info));
 			datas.add(data);
 		}
-		boolean flag = sessionPoolFactory.getElasticSession().addEsDataList(datas);
+		boolean flag = sessionPoolFactory.getElasticSession().addEsDataList(datas,false);
 		System.out.printf("flag="+flag);
 	}
 	
