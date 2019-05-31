@@ -1,6 +1,6 @@
 package com.application.elastic;
 
-import com.application.base.all.elastic.elastic.transport.factory.EsTransportSessionPoolFactory;
+import com.application.base.all.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
 import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.BaseJunit4Test;
 import com.application.base.utils.json.JsonConvertUtils;
@@ -9,7 +9,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +24,9 @@ import java.util.Map;
  **/
 public class ElasticTest extends BaseJunit4Test {
 	
-	
 	@Autowired
-	private EsTransportSessionPoolFactory operateFactory;
+	private EsJestSessionPoolFactory operateFactory;
+	//private EsTransportSessionPoolFactory operateFactory;
 	
 	
 	@Test
@@ -61,23 +63,27 @@ public class ElasticTest extends BaseJunit4Test {
 	}
 	
 	@Test
-	public void test100(){
+	public void test2000(){
+		long start = System.currentTimeMillis();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<ElasticData> datas=new ArrayList<>();
-		for (int i = 1000; i <1500 ; i++) {
+		for (int i = 0; i <2000 ; i++) {
 			ElasticData data = new ElasticData();
-			data.setIndex("finaltest");
-			data.setType("finaltest");
+			data.setIndex("base_legal_identity");
+			data.setType("base_legal_identity");
 			data.setId("student"+i);
 			Map<String,Object> info=new HashMap<>();
 			info.put("name","学生"+i);
 			info.put("idcard","98745612336985247"+(int)(10+Math.random()*(30-10+1)));
 			info.put("age",""+(int)(10+Math.random()*(30-10+1)));
 			info.put("score",""+(int)(10+Math.random()*(100-10+1)));
-			data.setData(info);
+			info.put("create_time",format.format(new Date()));
+			data.setData(JsonConvertUtils.toJson(info));
 			datas.add(data);
 		}
-		boolean flag = operateFactory.getElasticSession().addEsDataList(datas);
-		System.out.println("flag="+flag);
+		boolean flag = operateFactory.getElasticSession().addEsDataListByProcessor(datas,true);
+		long end = System.currentTimeMillis();
+		System.out.println("flag="+flag+", cost time ="+(end-start)/1000);
 	}
 	
 	@Test
