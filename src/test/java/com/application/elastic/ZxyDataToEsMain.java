@@ -1,5 +1,7 @@
 package com.application.elastic;
 
+import com.application.base.all.elastic.elastic.query.EsQueryBuilderInstance;
+import com.application.base.all.elastic.elastic.query.EsQueryBuilders;
 import com.application.base.all.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
 import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.BaseJunit4Test;
@@ -154,5 +156,20 @@ public class ZxyDataToEsMain extends BaseJunit4Test {
 			}
 		}
 		return columns;
+	}
+	
+	
+	@Test
+	public void searchData(){
+		EsQueryBuilderInstance instance = new EsQueryBuilderInstance();
+		instance.must(new EsQueryBuilders().match("ent_state", "在业"));
+		instance.must(new EsQueryBuilders().match("is_peat", "1"));
+		List<ElasticData> resultList = operateFactory.getElasticSession().searcher(instance.listBuilders(),"base_legal_identity","base_legal_identity");
+		for (ElasticData  data : resultList) {
+			Map<String,Object> map = data.getMapData();
+			for (Map.Entry<String,Object> entry:map.entrySet()){
+				System.out.println("key:"+ entry.getKey()+",value:"+entry.getValue());
+			}
+		}
 	}
 }
