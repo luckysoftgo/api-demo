@@ -1,6 +1,6 @@
 package com.application.redisson;
 
-import com.application.base.cache.redisson.redisson.factory.RedissonSimpleSessionFactory;
+import com.application.base.cache.redisson.redisson.factory.RedissonInstanceSessionFactory;
 import com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock;
 import com.application.base.core.BaseJunit4Test;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class RedissonTest extends BaseJunit4Test {
 	private RedissonClient standalone ;
 	
 	@Autowired
-	private RedissonSimpleSessionFactory redissonFactory;
+	private RedissonInstanceSessionFactory redissonFactory;
 	
 	@Autowired
 	private JDelegateDistributedLock redissonDistLock;
