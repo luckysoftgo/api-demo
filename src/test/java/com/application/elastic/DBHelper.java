@@ -17,9 +17,15 @@ public class DBHelper {
 	 * 定义常量来存储配置
 	 */
 	public static final String DRIVER="com.mysql.jdbc.Driver";  					//使用的数据库连接
+	/*
 	public static final String URL="jdbc:mysql://192.168.10.70:3306/sme_integrated_finance_ronghe?useUnicode=true&characterEncoding=utf8"; 	//定义使用的数据库
 	public static final String USER="root";      															//使用者的名字
 	public static final String PASS="x5";        															//使用者的密码
+	*/
+	
+	public static final String URL="jdbc:mysql://127.0.0.1:3306/elk_test?useUnicode=true&characterEncoding=utf8"; 	//定义使用的数据库
+	public static final String USER="root";      															//使用者的名字
+	public static final String PASS="123456";        															//使用者的密码
 	
 	
 	Connection conn=null;						//得到与数据库的连接

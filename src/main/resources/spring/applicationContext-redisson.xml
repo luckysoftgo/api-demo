@@ -16,6 +16,7 @@
     <bean id="stringCodec" class="org.redisson.client.codec.StringCodec"/>
     
     <!-- 单节点部署应用 -->
+    <!--
     <redisson:client
             id="standalone"
             name="simpleClient"
@@ -31,15 +32,17 @@
                 password="02681330-d47f-4e34-a0fc-4a2f8931c523"
         />
     </redisson:client>
-    
     <bean id="redissonFactory" class="com.application.base.cache.redisson.redisson.factory.RedissonInstanceSessionFactory">
         <property name="instanceClient" ref="standalone"/>
     </bean>
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
+    -->
+    
     
     <!-- 哨兵部署应用 -->
+    <!--
     <redisson:client
             id="sentinel"
             codec-ref="stringCodec">
@@ -62,8 +65,11 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
+    -->
+    
     
     <!-- 集群部署应用 -->
+    <!--
     <redisson:client
             id="cluster"
             codec-ref="stringCodec">
@@ -88,9 +94,10 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-    
+    -->
     
     <!-- 主从部署应用 -->
+    <!--
     <redisson:client
             id="masterSlave"
             codec-ref="stringCodec">
@@ -112,7 +119,7 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-    
+    -->
     
     <!-- 连接池基础信息配置 (公共使用) -->
     <bean id="commonConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
@@ -154,6 +161,7 @@
     
     
     <!-- 哨兵部署应用 -->
+    <!--
     <bean id="sentinelConfig" class="com.application.base.cache.redisson.redisson.pool.config.SentinelConfig">
         <property name="masterConnectionPoolSize" value="${redisson.sentinel.masterConnectionPoolSize}"/>
         <property name="slaveConnectionPoolSize" value="${redisson.sentinel.slaveConnectionPoolSize}"/>
@@ -177,10 +185,11 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-    
+    -->
     
     
     <!-- 主从部署应用 -->
+    <!--
     <bean id="masterSlavelConfig" class="com.application.base.cache.redisson.redisson.pool.config.MasterSlaveConfig">
         <property name="masterConnectionPoolSize" value="${redisson.masterslave.masterConnectionPoolSize}"/>
         <property name="slaveConnectionPoolSize" value="${redisson.masterslave.slaveConnectionPoolSize}"/>
@@ -204,10 +213,11 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-    
+    -->
     
     
     <!-- 集群部署应用 -->
+    <!--
     <bean id="clusterConfig" class="com.application.base.cache.redisson.redisson.pool.config.ClusterConfig">
         <property name="masterConnectionPoolSize" value="${redisson.cluster.masterConnectionPoolSize}"/>
         <property name="slaveConnectionPoolSize" value="${redisson.cluster.slaveConnectionPoolSize}"/>
@@ -230,10 +240,11 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-    
+    -->
     
     
     <!-- 云托部署应用 -->
+    <!--
     <bean id="cloudConfig" class="com.application.base.cache.redisson.redisson.pool.config.CloudConfig">
         <property name="masterConnectionPoolSize" value="${redisson.cloud.masterConnectionPoolSize}"/>
         <property name="slaveConnectionPoolSize" value="${redisson.cloud.slaveConnectionPoolSize}"/>
@@ -256,7 +267,7 @@
     <bean id="redissonDistLock" class="com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock">
         <property name="lockFactory" ref="redissonFactory"/>
     </bean>
-
+    -->
 
 </beans>
 

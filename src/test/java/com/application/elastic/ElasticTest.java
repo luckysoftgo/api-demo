@@ -9,7 +9,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -63,22 +62,22 @@ public class ElasticTest extends BaseJunit4Test {
 	}
 	
 	@Test
-	public void test2000(){
+	public void data1000000(){
 		long start = System.currentTimeMillis();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<ElasticData> datas=new ArrayList<>();
-		for (int i = 0; i <2000 ; i++) {
+		for (int i = 0; i <200000 ; i++) {
 			ElasticData data = new ElasticData();
-			data.setIndex("base_legal_identity");
-			data.setType("base_legal_identity");
+			data.setIndex("data1000000");
+			data.setType("data1000000");
 			data.setId("student"+i);
 			Map<String,Object> info=new HashMap<>();
 			info.put("name","学生"+i);
-			info.put("idcard","98745612336985247"+(int)(10+Math.random()*(30-10+1)));
-			info.put("age",""+(int)(10+Math.random()*(30-10+1)));
-			info.put("score",""+(int)(10+Math.random()*(100-10+1)));
-			info.put("create_time",format.format(new Date()));
-			data.setData(JsonConvertUtils.toJson(info));
+			info.put("idcard","8888888888888"+(int)(10+Math.random()*(100-10+1)));
+			info.put("age",""+(int)(10+Math.random()*(80-10+1)));
+			info.put("score",""+(int)(10+Math.random()*(150-10+1)));
+			info.put("create_time",new Date());
+			data.setMapFlag(true);
+			data.setMapData(info);
 			datas.add(data);
 		}
 		boolean flag = operateFactory.getElasticSession().addEsDataListByProcessor(datas,true);

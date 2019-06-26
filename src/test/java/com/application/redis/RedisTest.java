@@ -55,7 +55,7 @@ public class RedisTest extends BaseJunit4Test {
 	@Test
 	public void tryLock() {
 		String key = "redisLock";
-		boolean flag = distributedLock.tryLock(key);
+		boolean flag = distributedLock.getDistLock(key,key);
 		if (flag){
 			RedisSession redisSession = redisFactory.getCacheReadDataSession().getRedisSession();
 			for (int i = 0; i < 10; i++) {
@@ -63,7 +63,7 @@ public class RedisTest extends BaseJunit4Test {
 			}
 			System.err.println("完成操作!!!");
 		}
-		distributedLock.unLock(key);
+		distributedLock.releaseDistLock(key,key);
 	}
 	
 }

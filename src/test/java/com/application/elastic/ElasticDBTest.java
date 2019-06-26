@@ -42,8 +42,8 @@ public class ElasticDBTest extends BaseJunit4Test {
 				data.put("sort_no",result.getInt("sort_no"));
 				data.put("id",result.getString("id"));
 				ElasticData esData=new ElasticData();
-				esData.setIndex("screen");
-				esData.setType("screen");
+				esData.setIndex("xbzx-screen");
+				esData.setType("xbzx-screen");
 				esData.setId(result.getString("id"));
 				esData.setMapFlag(true);
 				esData.setMapData(data);
