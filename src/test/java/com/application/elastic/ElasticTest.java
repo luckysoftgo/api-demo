@@ -1,5 +1,7 @@
 package com.application.elastic;
 
+import com.application.base.all.elastic.elastic.query.EsQueryBuilderInstance;
+import com.application.base.all.elastic.elastic.query.EsQueryBuilders;
 import com.application.base.all.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
 import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.BaseJunit4Test;
@@ -62,13 +64,14 @@ public class ElasticTest extends BaseJunit4Test {
 	}
 	
 	@Test
-	public void data1000000(){
+	public void testData(){
 		long start = System.currentTimeMillis();
 		List<ElasticData> datas=new ArrayList<>();
-		for (int i = 0; i <200000 ; i++) {
+		int loopCount=200000;
+		for (int i = 0; i <loopCount; i++) {
 			ElasticData data = new ElasticData();
-			data.setIndex("data1000000");
-			data.setType("data1000000");
+			data.setIndex("data"+loopCount);
+			data.setType("data"+loopCount);
 			data.setId("student"+i);
 			Map<String,Object> info=new HashMap<>();
 			info.put("name","学生"+i);
@@ -80,6 +83,11 @@ public class ElasticTest extends BaseJunit4Test {
 			data.setMapData(info);
 			datas.add(data);
 		}
+		
+		//TransportClient.
+		//boolean flag = operateFactory.getElasticSession().addEsDataList(datas,false);
+		
+		//RestHighLevelClient.
 		boolean flag = operateFactory.getElasticSession().addEsDataListByProcessor(datas,true);
 		long end = System.currentTimeMillis();
 		System.out.println("flag="+flag+", cost time ="+(end-start)/1000);
@@ -87,8 +95,10 @@ public class ElasticTest extends BaseJunit4Test {
 	
 	@Test
 	public void search(){
+		EsQueryBuilderInstance instance = new EsQueryBuilderInstance();
+		instance.must(new EsQueryBuilders().match("score","50"));
 		QueryBuilder builder = QueryBuilders.matchAllQuery();
-		List<ElasticData>  datas = operateFactory.getElasticSession().searcher(builder,"finaltest","finaltest");
+		List<ElasticData>  datas = operateFactory.getElasticSession().searcher(instance.listBuilders(),"data10000","data10000");
 		System.out.println("size="+datas.size());
 		for (int i = 0; i < datas.size(); i++) {
 			System.out.println(datas.get(i).getData());
