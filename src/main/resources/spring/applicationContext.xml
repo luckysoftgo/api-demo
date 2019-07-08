@@ -171,7 +171,7 @@
     <!-- a:单数据源读写DataSessionFactory配置,不用redis,readDataSource 和 writeDataSource不设置,就默认是读库和写库都在一起,要是写上,就按照写上的执行相应的读写分离操作 -->
     <!-- 
     <bean id="readAndWriteDataSessionFactory" class="com.application.base.core.datasource.impl.common.SingleDefaultReadAndWriteDataSessionFactory">
-        <property name="support" ref="sqlSessionFactorySupport"/>
+        <property name="factorySupport" ref="sqlSessionFactorySupport"/>
         <property name="defaultDataSource" value="sqlsessionfactory.default"/>
         <property name="readDataSource" value="sqlsessionfactory.read"/>
         <property name="writeDataSource" value="sqlsessionfactory.write"/>
@@ -182,7 +182,7 @@
     <!-- b:单数据源读写DataSessionFactory配置,用redis,readDataSource 和 writeDataSource不设置,就默认是读库和写库都在一起,要是写上,就按照写上的执行相应的读写分离操作 -->
    	<!-- 
     <bean id="readAndWriteDataSessionFactory" class="com.application.base.core.datasource.impl.cache.SingleDefaultCacheReadAndWriteDataSessionFactory">
-        <property name="support" ref="sqlSessionFactorySupport"/>
+        <property name="factorySupport" ref="sqlSessionFactorySupport"/>
         <property name="redisSessionFactory" ref="redisFactory"/>
         <property name="defaultDataSource" value="sqlsessionfactory.default"/>
         <property name="readDataSource" value="sqlsessionfactory.read"/>
@@ -194,7 +194,7 @@
     <!-- c:多数据源读写 DataSessionFactory 配置,不用redis,表明操作的是多个库的表结构信息,如果在业务中,没有对数据源进行设置,设置defaultDataSource,程序会按照这个设置来执行 CRUD 操作 -->
     <!-- 
     <bean id="readAndWriteDataSessionFactory" class="com.application.base.core.datasource.impl.common.MutilDefaultReadAndWriteDataSessionFactory">
-        <property name="support" ref="sqlSessionFactorySupport"/>
+        <property name="factorySupport" ref="sqlSessionFactorySupport"/>
         <property name="defaultDataSource" value="sqlSessionFactoryDefault"/>
     </bean>
     -->
@@ -202,7 +202,7 @@
     
     <!-- d:多数据源读写 DataSessionFactory 配置,用redis,表明操作的是多个库的表结构信息,如果在业务中,没有对数据源进行设置,设置defaultDataSource,程序会按照这个设置来执行 CRUD 操作 -->
     <bean id="readAndWriteDataSessionFactory" class="com.application.base.core.datasource.impl.cache.MutilDefaultCacheReadAndWriteDataSessionFactory">
-        <property name="support" ref="sqlSessionFactorySupport"/>
+        <property name="factorySupport" ref="sqlSessionFactorySupport"/>
         <property name="redisSessionFactory" ref="redisFactory"/>
         <property name="defaultDataSource" value="sqlSessionFactoryDefault"/>
     </bean>
