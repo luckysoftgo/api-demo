@@ -26,9 +26,18 @@ public class ElasticDBTest extends BaseJunit4Test {
 	//private EsTransportSessionPoolFactory operateFactory;
 	
 	@Test
+	public void testCreateDB(){
+		String kettle="kettle";
+		boolean result=operateFactory.getElasticSession().addEsIndex(kettle);
+		System.out.println("创建的结果 1 是:"+result);
+		result=operateFactory.getElasticSession().addEsType(kettle,"test1");
+		System.out.println("创建的结果 2 是:"+result);
+	}
+	
+	@Test
 	public void testfromDb(){
 		DBHelper dbHelper=new DBHelper();
-		String sql = "SELECT first_level_name, second_level_name, data_volume, data_type, class_name, sort_no, id FROM elk_test.sum_data";
+		String sql = "SELECT FIRST_LEVEL_NAME, SECOND_LEVEL_NAME, DATA_VOLUME, DATA_TYPE, CLASS_NAME, SORT_NO, ID FROM SUM_DATA_DIR";
 		List<ElasticData> dataList=new ArrayList<ElasticData>();
 		ResultSet result = dbHelper.stQuery(sql);
 		try {
@@ -42,8 +51,8 @@ public class ElasticDBTest extends BaseJunit4Test {
 				data.put("sort_no",result.getInt("sort_no"));
 				data.put("id",result.getString("id"));
 				ElasticData esData=new ElasticData();
-				esData.setIndex("xbzx-screen");
-				esData.setType("xbzx-screen");
+				esData.setIndex("test-screen");
+				esData.setType("test-screen");
 				esData.setId(result.getString("id"));
 				esData.setMapFlag(true);
 				esData.setMapData(data);
@@ -70,9 +79,9 @@ public class ElasticDBTest extends BaseJunit4Test {
 	@Test
 	public void testfromDb1(){
 		ElasticData data=new ElasticData();
-		data.setIndex("bruce1");
-		data.setType("brucetest1");
-		data.setId("000000");
+		data.setIndex("kettle");
+		data.setType("test1");
+		data.setId("1000000");
 		data.setData(JsonConvertUtils.toJson(createJson()));
 		data.setMapFlag(false);
 		boolean flag = operateFactory.getElasticSession().addEsData(data);
