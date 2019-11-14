@@ -2,10 +2,12 @@ package com.application.kylin;
 
 import com.application.base.core.BaseJunit4Test;
 import com.application.base.kylin.jdbc.factory.KylinJdbcSessionFactory;
+import com.application.base.utils.json.JsonConvertUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author : 孤狼
@@ -20,16 +22,9 @@ public class JdbcTest extends BaseJunit4Test {
 	@Test
 	public void testQuery(){
 		String sql = "select * from LOAN_DATA_80W limit 10 ";
-		ResultSet resultSet = sessionFactory.getJdbcSession().selectSQL("Kkklin",sql);
-		try {
-			while (resultSet.next()) {
-				System.out.println("values:"+resultSet.getString("GRADE")+","+resultSet.getString("ZIP_CODE")+","+resultSet.getString("APPLICATION_TYPE"));
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			sessionFactory.getJdbcSession().close("Kkklin");
-		}
+		LinkedList<Map<String, Object>>  finalList = sessionFactory.getJdbcSession().selectSQL("Kkklin",sql);
+		System.out.println(JsonConvertUtils.toJson(finalList));
+		System.out.println(JsonConvertUtils.toJsonHasNull(finalList.get(0)));
 	}
 	
 }
