@@ -17,6 +17,11 @@
     </properties>
 
     <dependencies>
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-kylin</artifactId>
+			<version>${base-xxx.version}</version>
+		</dependency>
         <dependency>
             <groupId>com.application.base</groupId>
             <artifactId>base-core</artifactId>
@@ -91,7 +96,11 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.1.32.Final</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.4.2</version>
+		</dependency>
     </dependencies>
 
     <!-- 全局环境变量 -->
