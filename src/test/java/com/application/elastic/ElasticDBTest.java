@@ -58,6 +58,7 @@ public class ElasticDBTest extends BaseJunit4Test {
 				esData.setMapData(data);
 				dataList.add(esData);
 			}
+			System.out.println("数据条数是:"+dataList.size());
 			boolean flag = operateFactory.getElasticSession().addEsDataList(dataList,true);
 			if (flag){
 				System.out.println("成功");

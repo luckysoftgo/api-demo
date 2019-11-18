@@ -70,8 +70,8 @@ public class ElasticTest extends BaseJunit4Test {
 		int loopCount=200000;
 		for (int i = 0; i <loopCount; i++) {
 			ElasticData data = new ElasticData();
-			data.setIndex("data"+loopCount);
-			data.setType("data"+loopCount);
+			data.setIndex("数据"+loopCount);
+			data.setType("数据"+loopCount);
 			data.setId("student"+i);
 			Map<String,Object> info=new HashMap<>();
 			info.put("name","学生"+i);
