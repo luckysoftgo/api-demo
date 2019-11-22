@@ -15,7 +15,6 @@ import java.util.Map;
  * @NAME: DataInput
  * @DESC:
  * @USER: 孤狼
- * @DATE: 2019年7月16日
  **/
 public class DataInput {
 	

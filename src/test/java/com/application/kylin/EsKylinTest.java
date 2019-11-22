@@ -1,8 +1,8 @@
 package com.application.kylin;
 
-import com.application.base.all.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
-import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.BaseJunit4Test;
+import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.entity.ElasticData;
 import com.application.base.kylin.jdbc.factory.KylinJdbcSessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

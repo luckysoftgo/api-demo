@@ -34,11 +34,24 @@ public class RestApiTest extends BaseJunit4Test {
 	}
 	
 	@Test
+	public void testTable(){
+		String projectName="Kkklin";
+		String result = sessionFactory.getRestSession().queryTables(projectName);
+		System.out.println(result);
+	}
+	
+	@Test
 	public void testListCube(){
 		int offset=0;
 		int limit =50;
 		String json = sessionFactory.getRestSession().listCubes(offset,limit,null,null);
 		System.out.println("结果是:\n\t"+json);
+	}
+	
+	@Test
+	public void testCube(){
+		String cubdesc_array = sessionFactory.getRestSession().getCube("Credit_Risk_Cube");
+		System.out.println("result\n\t"+cubdesc_array);
 	}
 	
 	@Test
