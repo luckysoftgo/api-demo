@@ -1,8 +1,8 @@
 package com.application.elastic;
 
-import com.application.base.all.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
-import com.application.base.all.elastic.entity.ElasticData;
 import com.application.base.core.BaseJunit4Test;
+import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.entity.ElasticData;
 import com.application.base.utils.date.DateUtils;
 import com.application.base.utils.json.JsonConvertUtils;
 import org.junit.Test;
