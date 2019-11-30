@@ -29,22 +29,24 @@ public class ElasticTest extends BaseJunit4Test {
 	private EsJestSessionPoolFactory operateFactory;
 	//private EsTransportSessionPoolFactory operateFactory;
 	
-	
 	@Test
 	public void factory(){
-		ElasticData data = new ElasticData();
-		data.setIndex("hahaha");
-		data.setType("hahaha");
-		data.setId("hahaha");
-		Map<String,Object> info=new HashMap<>();
-		info.put("info1","测试");
-		info.put("info2","调试");
-		info.put("info3","上线");
-		info.put("info4","读写");
-		info.put("info5","分库");
-		data.setData(JsonConvertUtils.toJson(info));
-		boolean flag = operateFactory.getElasticSession().addEsData(data);
-		System.out.printf("flag="+flag);
+		for (int i = 0; i <2000 ; i++) {
+			ElasticData data = new ElasticData();
+			data.setIndex("hahaha");
+			data.setType("hahaha");
+			data.setId("hahaha"+i);
+			Map<String,Object> info=new HashMap<>();
+			info.put("info1","测试");
+			info.put("info2","调试");
+			info.put("info3","上线");
+			info.put("info4","读写");
+			info.put("info5","分库");
+			data.setMapFlag(false);
+			data.setData(JsonConvertUtils.toJson(info));
+			boolean flag = operateFactory.getElasticSession().addEsData(data);
+			System.out.printf("index="+i+",flag="+flag);
+		}
 	}
 	
 	@Test

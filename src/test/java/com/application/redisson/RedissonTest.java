@@ -1,11 +1,9 @@
 package com.application.redisson;
 
 import com.application.base.cache.redisson.redisson.factory.RedissonInstanceSessionFactory;
-import com.application.base.cache.redisson.redisson.lock.JDelegateDistributedLock;
+import com.application.base.cache.redisson.redisson.lock.RedissonDelegateDistributedLock;
 import com.application.base.core.BaseJunit4Test;
 import org.junit.Test;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -18,17 +16,18 @@ import java.util.Map;
 public class RedissonTest extends BaseJunit4Test {
 	
 	@Autowired
-	private RedissonClient standalone ;
-	
-	@Autowired
 	private RedissonInstanceSessionFactory redissonFactory;
 	
 	@Autowired
-	private JDelegateDistributedLock redissonDistLock;
+	private RedissonDelegateDistributedLock redissonDistLock;
 	
 	@Test
 	public void distLock() {
 		String key = "testLock";
+		for (int i = 0; i <500 ; i++) {
+			redissonFactory.getRedissonSession().setRString(key+i,"redisson"+i,100);
+			System.out.println("index="+i);
+		}
 	}
 	
 	@Test
@@ -53,14 +52,6 @@ public class RedissonTest extends BaseJunit4Test {
 		}
 		//解锁操作.
 		redissonDistLock.unLock(key);
-	}
-	
-	@Test
-	public void test() {
-		String key  = "test";
-		RBucket bucket = standalone.getBucket(key);
-		bucket.set("123456789");
-		System.out.println("得到的結果是："+bucket.get());
 	}
 	
 	@Test

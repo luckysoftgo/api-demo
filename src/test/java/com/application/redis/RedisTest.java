@@ -1,12 +1,11 @@
 package com.application.redis;
 
-import com.application.base.cache.redis.jedis.lock.DelegateDistributedLock;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.application.base.cache.redis.api.RedisSession;
+import com.application.base.cache.redis.jedis.lock.RedisDelegateDistributedLock;
 import com.application.base.core.BaseJunit4Test;
 import com.application.base.core.datasource.impl.cache.MutilDefaultCacheReadAndWriteDataSessionFactory;
-import com.application.base.cache.redis.api.RedisSession;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class RedisTest extends BaseJunit4Test {
 
@@ -14,7 +13,7 @@ public class RedisTest extends BaseJunit4Test {
 	private MutilDefaultCacheReadAndWriteDataSessionFactory redisFactory;
 	
 	@Autowired
-	private DelegateDistributedLock distributedLock;
+	private RedisDelegateDistributedLock distributedLock;
 	
 	@Test
 	public void distLock() {
@@ -64,6 +63,16 @@ public class RedisTest extends BaseJunit4Test {
 			System.err.println("完成操作!!!");
 		}
 		distributedLock.releaseDistLock(key,key);
+	}
+	
+	@Test
+	public void test100() {
+		for (int i = 0; i <5000 ; i++) {
+			RedisSession redisSession = redisFactory.getCacheReadDataSession().getRedisSession();
+			redisSession.set("test"+i,"value"+i);
+			System.out.println("index="+i);
+		}
+		System.err.println("完成操作!!!");
 	}
 	
 }

@@ -13,9 +13,10 @@ import java.util.Set;
 public class ConnectTest {
 	
 	public static void main(String[] args)  {
-		Jedis jedis=new Jedis("118.24.157.96",26339);
+		Jedis jedis = new Jedis("118.24.157.96",26339);
 		Set<String> keys =jedis.keys("*");
 		System.out.println(keys);
+		System.out.println(jedis.set("aaa","bbb"));
 	}
 	
 }

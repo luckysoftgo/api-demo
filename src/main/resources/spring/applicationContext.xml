@@ -70,25 +70,27 @@
                 <value>classpath:/properties/es.properties</value>
 				<value>classpath:/properties/kylin.properties</value>
                 <value>classpath:/properties/redisson.properties</value>
+				<value>classpath:/properties/zookeeper.properties</value>
 		    </list>
         </property>
 	</bean>
 	
 	<!-- 引入配置文件 -->
-    <import resource="classpath:spring/applicationContext-base.xml"/>
-    <import resource="classpath:spring/applicationContext-dataSource.xml"/>
-    <import resource="classpath:spring/applicationContext-jobTask.xml"/>
+	<import resource="classpath:spring/applicationContext-auth.xml"/>
+	<import resource="classpath:spring/applicationContext-base.xml"/>
+	<import resource="classpath:spring/applicationContext-dataSource.xml"/>
+	<import resource="classpath:spring/applicationContext-elastic.xml"/>
+	<import resource="classpath:spring/applicationContext-jobTask.xml"/>
+	<import resource="classpath:spring/applicationContext-kylin.xml"/>
     <import resource="classpath:spring/applicationContext-message.xml"/>
     <!--
     <import resource="classpath:spring/applicationContext-mongo.xml"/>
     -->
-    <import resource="classpath:spring/applicationContext-redis.xml"/>
-    <import resource="classpath:spring/applicationContext-auth.xml"/>
-    <import resource="classpath:spring/applicationContext-pay.xml"/>
-    <import resource="classpath:spring/applicationContext-redisson.xml"/>
-    <import resource="classpath:spring/applicationContext-elastic.xml"/>
-	<import resource="classpath:spring/applicationContext-kylin.xml"/>
-
+	<import resource="classpath:spring/applicationContext-pay.xml"/>
+	<import resource="classpath:spring/applicationContext-redis.xml"/>
+	<import resource="classpath:spring/applicationContext-redisson.xml"/>
+	<import resource="classpath:spring/applicationContext-zookeeper.xml"/>
+	
     <!-- 自动注册扫描文件 -->
     <context:annotation-config/>
 
@@ -105,6 +107,7 @@
                 <value>config/message.properties</value>
                 <value>properties/es.properties</value>
                 <value>properties/redisson.properties</value>
+				<value>properties/zookeeper.properties</value>
             </list>
         </property>
     </bean>

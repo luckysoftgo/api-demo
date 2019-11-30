@@ -17,6 +17,13 @@
     </properties>
 
     <dependencies>
+		
+		<dependency>
+			<groupId>com.application.base</groupId>
+			<artifactId>base-config</artifactId>
+			<version>${base-xxx.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.application.base</groupId>
 			<artifactId>base-kylin</artifactId>

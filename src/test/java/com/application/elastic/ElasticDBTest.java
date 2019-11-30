@@ -2,6 +2,7 @@ package com.application.elastic;
 
 import com.application.base.core.BaseJunit4Test;
 import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.elastic.transport.factory.EsTransportSessionPoolFactory;
 import com.application.base.elastic.entity.ElasticData;
 import com.application.base.utils.date.DateUtils;
 import com.application.base.utils.json.JsonConvertUtils;
@@ -23,15 +24,24 @@ public class ElasticDBTest extends BaseJunit4Test {
 	
 	@Autowired
 	private EsJestSessionPoolFactory operateFactory;
-	//private EsTransportSessionPoolFactory operateFactory;
+	
+	@Autowired
+	private EsTransportSessionPoolFactory transportFactory;
 	
 	@Test
 	public void testCreateDB(){
-		String kettle="kettle";
+		for (int i = 0; i <1000 ; i++) {
+			String kettle="kettle";
+			boolean result=operateFactory.getElasticSession().judgeIndexExist(kettle);
+			System.out.println("index="+i+",创建的结果 1 是:"+result);
+			result=operateFactory.getElasticSession().addEsType(kettle,"test1");
+			System.out.println("index="+i+",创建的结果 2 是:"+result);
+		}
+		/*String kettle="kettle";
 		boolean result=operateFactory.getElasticSession().addEsIndex(kettle);
 		System.out.println("创建的结果 1 是:"+result);
 		result=operateFactory.getElasticSession().addEsType(kettle,"test1");
-		System.out.println("创建的结果 2 是:"+result);
+		System.out.println("创建的结果 2 是:"+result);*/
 	}
 	
 	@Test
