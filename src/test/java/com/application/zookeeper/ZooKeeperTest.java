@@ -20,10 +20,14 @@ public class ZooKeeperTest extends BaseJunit4Test {
 	public void test(){
 		for (int i = 0; i < 500 ; i++) {
 			try {
-				String node = "/testNode"+i;
-				boolean result = zookeeperFactory.getZooKeeperSession().exists(node);
+				String node = "/super/testNode"+i;
+				boolean result = zookeeperFactory.getZooKeeperSession().createNode(node);
 				if (result){
-					System.out.println("存在!");
+					System.out.println("节点"+node+"存在!");
+					result = zookeeperFactory.getZooKeeperSession().deleteNode(node,false);
+					if (result){
+						System.out.println(node+"删除成功");
+					}
 				}else{
 					System.out.println("不存在!");
 				}
