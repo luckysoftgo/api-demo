@@ -67,7 +67,7 @@
                 <value>classpath:/properties/config.properties</value>
                 <value>classpath:/properties/redis.properties</value>
                 <value>classpath:/properties/mongo.properties</value>
-                <value>classpath:/properties/es.properties</value>
+                <value>classpath:/properties/elastic.properties</value>
 				<value>classpath:/properties/kylin.properties</value>
                 <value>classpath:/properties/redisson.properties</value>
 				<value>classpath:/properties/zookeeper.properties</value>
@@ -105,7 +105,7 @@
                 <value>properties/jdbc.properties</value>
                 <value>properties/redis.properties</value>
                 <value>config/message.properties</value>
-                <value>properties/es.properties</value>
+                <value>properties/elastic.properties</value>
                 <value>properties/redisson.properties</value>
 				<value>properties/zookeeper.properties</value>
             </list>
