@@ -18,10 +18,17 @@
 
     <dependencies>
 		
+		<!--剔除包-->
 		<dependency>
 			<groupId>com.application.base</groupId>
 			<artifactId>base-config</artifactId>
 			<version>${base-xxx.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<dependency>
