@@ -1,7 +1,7 @@
 package com.application.kylin;
 
 import com.application.base.core.BaseJunit4Test;
-import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.elastic.restclient.factory.EsRestClientSessionPoolFactory;
 import com.application.base.elastic.entity.ElasticData;
 import com.application.base.kylin.jdbc.factory.KylinJdbcSessionFactory;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class EsKylinTest extends BaseJunit4Test {
 	
 	@Autowired
-	private EsJestSessionPoolFactory jestFactory;
+	private EsRestClientSessionPoolFactory jestFactory;
 	
 	@Autowired
 	private KylinJdbcSessionFactory sessionFactory;

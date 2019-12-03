@@ -1,7 +1,7 @@
 package com.application.es;
 
 import com.application.base.core.BaseJunit4Test;
-import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.elastic.restclient.factory.EsRestClientSessionPoolFactory;
 import com.application.base.elastic.elastic.transport.factory.EsTransportSessionPoolFactory;
 import com.application.base.elastic.entity.ElasticData;
 import com.application.base.utils.date.DateUtils;
@@ -35,7 +35,7 @@ public class Entrance extends BaseJunit4Test {
 	@Autowired
 	private EsTransportSessionPoolFactory transportFactory;
 	@Autowired
-	private EsJestSessionPoolFactory jestFactory;
+	private EsRestClientSessionPoolFactory jestFactory;
 	
 	@Test
 	public void test1(){

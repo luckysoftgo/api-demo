@@ -3,7 +3,7 @@ package com.application.elastic;
 import com.application.base.core.BaseJunit4Test;
 import com.application.base.elastic.elastic.query.EsQueryBuilderInstance;
 import com.application.base.elastic.elastic.query.EsQueryBuilders;
-import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.elastic.restclient.factory.EsRestClientSessionPoolFactory;
 import com.application.base.elastic.entity.ElasticData;
 import com.application.base.utils.json.JsonConvertUtils;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class ElasticTest extends BaseJunit4Test {
 	
 	@Autowired
-	private EsJestSessionPoolFactory operateFactory;
+	private EsRestClientSessionPoolFactory operateFactory;
 	//private EsTransportSessionPoolFactory operateFactory;
 	
 	@Test

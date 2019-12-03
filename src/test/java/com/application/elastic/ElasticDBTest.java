@@ -1,7 +1,7 @@
 package com.application.elastic;
 
 import com.application.base.core.BaseJunit4Test;
-import com.application.base.elastic.elastic.rest.factory.EsJestSessionPoolFactory;
+import com.application.base.elastic.elastic.restclient.factory.EsRestClientSessionPoolFactory;
 import com.application.base.elastic.elastic.transport.factory.EsTransportSessionPoolFactory;
 import com.application.base.elastic.entity.ElasticData;
 import com.application.base.utils.date.DateUtils;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class ElasticDBTest extends BaseJunit4Test {
 	
 	@Autowired
-	private EsJestSessionPoolFactory operateFactory;
+	private EsRestClientSessionPoolFactory operateFactory;
 	
 	@Autowired
 	private EsTransportSessionPoolFactory transportFactory;
