@@ -12,7 +12,7 @@
 	<!-- 日志最大的历史 30天 -->
 	<property name="maxHistory" value="30" />
 	<!-- 定义日志文件,输入位置 -->
-	<property name="LOG_PATH" value="D:\\Logs" />
+	<property name="LOG_PATH" value="logs" />
     <property name="APPDIR" value="apidemo" />
     <!-- 时间戳定义,timeReference：使用日志产生日期为时间基准 -->  
     <timestamp key="BY-DAY" datePattern="yyyyMMdd" timeReference="contextBirth" />  

@@ -20,7 +20,7 @@
            STDOUT 将日志信息输出到控制上，为方便开发测试使用
     -->
   	<!--定义日志文件的存储地址和前缀名-->
-	<property name="LOG_PATH" value="D:\\Logs" />
+	<property name="LOG_PATH" value="logs" />
     <property name="APPDIR" value="apidemo" />
     <!-- 时间戳定义,timeReference：使用日志产生日期为时间基准 -->  
     <timestamp key="BY-DAY" datePattern="yyyyMMdd" timeReference="contextBirth" />  
